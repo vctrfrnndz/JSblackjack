@@ -1,0 +1,129 @@
+@font-face {
+	font-family: 'ico';
+	src:url('fonts/ico.eot');
+	src:url('fonts/ico.eot?#iefix') format('embedded-opentype'),
+		url('fonts/ico.svg#icomoon') format('svg'),
+		url('fonts/ico.woff') format('woff'),
+		url('fonts/ico.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'ico';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"]:before {
+*/
+.icon-twitter:before, .icon-dribbble:before, .icon-github:before, .icon-github-2:before, .icon-embed:before, .icon-pen:before, .icon-feed:before, .icon-stackoverflow:before, .icon-pinterest:before, .icon-checkmark:before, .icon-spinner:before, .icon-vimeo:before, .icon-star:before, .icon-target:before, .icon-eject:before, .icon-play:before, .icon-user:before, .icon-talk:before, .icon-tag:before, .icon-reload:before, .icon-popup:before, .icon-nope:before, .icon-music:before, .icon-mail:before, .icon-heart:before, .icon-exit:before, .icon-document:before, .icon-clock:before, .icon-book:before, .icon-arrowright:before, .icon-arrowleft:before {
+	font-family: 'ico';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-twitter:before {
+	content: "\74";
+	text-transform: none;
+}
+.icon-dribbble:before {
+	content: "\64";
+}
+.icon-github:before {
+	content: "\67";
+}
+.icon-github-2:before {
+	content: "\47";
+}
+.icon-embed:before {
+	content: "\63";
+}
+.icon-pen:before {
+	content: "\45";
+}
+.icon-feed:before {
+	content: "\72";
+}
+.icon-stackoverflow:before {
+	content: "\73";
+}
+.icon-pinterest:before {
+	content: "\50";
+}
+.icon-checkmark:before {
+	content: "\43";
+}
+.icon-spinner:before {
+	content: "\4c";
+}
+.icon-vimeo:before {
+	content: "\76";
+}
+.icon-star:before {
+	content: "\52";
+}
+.icon-target:before {
+	content: "\6d";
+}
+.icon-eject:before {
+	content: "\65";
+}
+.icon-play:before {
+	content: "\70";
+}
+.icon-user:before {
+	content: "\75";
+}
+.icon-talk:before {
+	content: "\54";
+}
+.icon-tag:before {
+	content: "\62";
+}
+.icon-reload:before {
+	content: "\6c";
+}
+.icon-popup:before {
+	content: "\77";
+}
+.icon-nope:before {
+	content: "\78";
+}
+.icon-music:before {
+	content: "\7a";
+}
+.icon-mail:before {
+	content: "\4d";
+}
+.icon-heart:before {
+	content: "\41";
+}
+.icon-exit:before {
+	content: "\58";
+}
+.icon-document:before {
+	content: "\6e";
+}
+.icon-clock:before {
+	content: "\e01b";
+}
+.icon-book:before {
+	content: "\42";
+}
+.icon-arrowright:before {
+	content: "\3c";
+}
+.icon-arrowleft:before {
+	content: "\3e";
+}

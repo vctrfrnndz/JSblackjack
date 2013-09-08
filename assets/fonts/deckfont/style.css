@@ -1,0 +1,60 @@
+@font-face {
+	font-family: 'deck';
+	src:url('fonts/deck.eot');
+	src:url('fonts/deck.eot?#iefix') format('embedded-opentype'),
+		url('fonts/deck.woff') format('woff'),
+		url('fonts/deck.ttf') format('truetype'),
+		url('fonts/deck.svg#deck') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'deck';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="card-"] {
+*/
+.card-queen, .card-jack, .card-king, .card-heart, .card-diamond, .card-club, .card-spade {
+	font-family: 'deck';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.card-queen:before {
+	content: "\71";
+}
+.card-jack:before {
+	content: "\6a";
+}
+.card-king:before {
+	content: "\6b";
+}
+.card-heart:before {
+	content: "\68";
+}
+.card-diamond:before {
+	content: "\64";
+}
+.card-club:before {
+	content: "\63";
+}
+.card-spade:before {
+	content: "\73";
+}
