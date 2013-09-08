@@ -1,0 +1,255 @@
+/// Kick.less v0.2 by @vctrfrnndz (http://vctrfrnndz.com/projects/kick)
+
+@import url("resets.less");
+
+// Basic resets
+.reset-spacing() { 
+    padding: 0; margin: 0;
+}
+.reset-this() { 
+    padding: 0;
+    margin: 0;
+    text-decoration:none;
+    border: 0;
+    outline: none;
+    list-style:none;
+}
+.kill-outline() {
+    outline: none;
+}
+
+// Set an element's size
+.size(@thesize) {
+    width: @thesize;
+    height: @thesize;
+}
+.size(@width, @height) {
+    width: @width;
+    height: @height;
+}
+
+// Using inline-block with some added compatibility (I am looking at you, IE)
+.inline-block() {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+// Switch to cool box model
+// (padding and margin are calculated inside the element's size).
+.fix-box-sizing() {
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+// If you asigned .fix-box-sizing by default you can switch
+// to shitty (default) box sizing for any element.
+.shitty-box-sizing() {
+    -webkit-box-sizing: content-box; 
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+// Hide, show or make invisible
+.hide { 
+    display: none !important;
+}
+.show { 
+    display:block;
+}
+.invisible {
+    visibility: hidden;
+}
+
+// Group class for elements containing floats
+.group {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+
+    *zoom: 1;
+}
+
+// Or use a .clearfix element
+.clearfix {
+    clear:both;
+}
+
+// Convert a list to row format
+.row-list() {
+    list-style:none;
+    margin:0; padding:0;
+
+    li {
+    display:inline-block;
+    vertical-align:top;
+
+    &+li {
+        margin-left:1em;
+        }
+    }
+}
+
+// Make your background image resize 
+.cover-bg () {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+// Remove text for sprites and the likes 
+.rt() {
+    border: 0;
+    font: 0/0 a;
+    text-shadow: none;
+    color: transparent;
+    background-color: transparent;
+
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.rt-oldschool() {
+    text-indent: -9999px;
+    overflow:hidden;
+}
+
+// Switch on/off to antialiased font rendering (just webkit supports this for now) 
+.nice-text () {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+}
+.normal-text () {
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-smoothing: subpixel-antialiased;
+}
+
+// Faux small caps
+.sc(@size:.70em, @spacing:.1em) {
+    font-size:@size;
+    text-transform:uppercase;
+    letter-spacing:@spacing;
+}
+
+// Remove gap from the bottom of img elements
+img {
+    vertical-align: middle;
+}
+
+// Add contrast to text
+.text-drop-white() {
+    text-shadow:0 1px rgba(255,255,255,.4);
+}
+.text-drop-black() {
+    text-shadow:0 1px rgba(0,0,0,.5);
+}
+
+// Customize placeholder color
+.placeholder-color(@color: #DDD) {
+    :-moz-placeholder {
+        color: @color;
+    }
+    ::-webkit-input-placeholder {
+        color: @color;
+    }
+}
+
+// Add a little noise texture (comes in handy)
+.add-noise () { 
+    @noise-data:url(data:image/png;base64,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);
+    background-image:@noise-data;
+} // Usage: .add-noise;
+
+// Add rounded corners for a whole element
+.round (@radius: 3px) {
+    border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+} // Usage: .round(radius);
+
+// More specific round borders
+.radius (@a: 3px, @b: 3px, @c: 3px, @d:3px) {
+    border-radius: @arguments;
+    -webkit-border-radius: @arguments;
+    -moz-border-radius: @arguments;
+
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+} // Usage: .radius(top, right, bottom, left);
+
+// Drop shadows
+.shadow (@values) {
+    box-shadow: @values;
+    -moz-box-shadow: @values;
+    -webkit-box-shadow: @values;
+}
+
+// CSS3 rotate
+.rotate(@deg: 0deg) {
+    -webkit-transform: rotate(@deg);  
+    -moz-transform: rotate(@deg);  
+    -ms-transform: rotate(@deg);  
+    -o-transform: rotate(@deg);  
+    transform: rotate(@deg);
+} // Example: .rotate(5deg); 
+
+// CSS3 grandients 
+#gradient {
+    .horizontal (@start-color, @end-color) {
+        background-color: @end-color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, right top, from(@start-color), to(@end-color)); /* Konqueror */
+        background-image: -moz-linear-gradient(left, @start-color, @end-color); /* FF 3.6+ */
+        background-image: -ms-linear-gradient(left, @start-color, @end-color); /* IE10 */
+        background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+        background-image: -webkit-linear-gradient(left, @start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+        background-image: -o-linear-gradient(left, @start-color, @end-color); /* Opera 11.10 */
+        background-image: -ms-linear-gradient(left, @start-color 0%, @end-color 100%);  /* IE10+ */
+        background-image: linear-gradient(left, @start-color, @end-color); /* the standard */
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color)); /* IE6 & IE7 */
+        -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color); /* IE8+ */
+    }
+    .vertical (@start-color, @end-color) {
+        background-color: @end-color;
+        background-repeat: repeat-x;
+        background-image: -khtml-gradient(linear, left top, left bottom, from(@start-color), to(@end-color)); /* Konqueror */
+        background-image: -moz-linear-gradient(@start-color, @end-color); /* FF 3.6+ */
+        background-image: -ms-linear-gradient(@start-color, @end-color); /* IE10 */
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+        background-image: -webkit-linear-gradient(@start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+        background-image: -o-linear-gradient(@start-color, @end-color); /* Opera 11.10 */
+        background-image: -ms-linear-gradient(top, @start-color 0%, @end-color 100%);  /* IE10+ */
+        background-image: linear-gradient(@start-color, @end-color); /* the standard */
+        filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); /* IE6 & IE7 */
+        -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color); /* IE8+ */
+    }
+}
+
+// Transitions
+.trans-out(@time: 0.3s){
+    -webkit-transition: all @time ease-out;  
+    -moz-transition: all @time ease-out;  
+    -ms-transition: all @time ease-out;  
+    -o-transition: all @time ease-out;  
+    transition: all @time ease-out;
+} 
+.trans-in(@time: 0.3s){
+    -webkit-transition: all @time ease-in;  
+    -moz-transition: all @time ease-in;  
+    -ms-transition: all @time ease-in;  
+    -o-transition: all @time ease-in;  
+    transition: all @time ease-in;
+}
