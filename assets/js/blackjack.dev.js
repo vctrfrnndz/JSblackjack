@@ -99,7 +99,7 @@ Game = {
             return gameScore + '. You win!';
         }
         else if (playerHand.score() === dealerHand.score()) {
-            return playerScored + '. You tied!';
+            return gameScore + '. You tied!';
         }
         else {
             return gameScore + '! You lose!';
@@ -118,16 +118,14 @@ Game = {
                         clearInterval(this);
                     }
                     counter++;
-                });
+                }, 200);
             });
         },
         updateBar: function (message) {
             $(barContainer).text(message);
         },
         stopControls: function () {
-            $(controlsContainer).off('click', '#hit, #stand');
-            $(controlsContainer).find("#hit").addClass('dis');
-            $(controlsContainer).find("#stand").addClass('dis');
+            $(controlsContainer).find("#hit, #stand").addClass('dis');
         }
     },
     play: {
@@ -164,33 +162,22 @@ Game = {
             }
         }
     },
-    initControls: function () {
-        $("#new-game").on('click', function () {
-            Game.init();
-            return false;
-        });
+    startScreen: function() {
+        $('#cover').css('visibility', 'visible');
 
-        $(controlsContainer).on('click', '#hit', function () {
-            Game.play.evaluate();
-            return false;
-        });
+        $('#logo')
+            .transition({ x: '-50em' }, 0)
+            .transition({ x: '0' }, 600, 'in-out' );
+        $('#new-game')
+            .transition({ x: '-50em' }, 0);
 
-        $(controlsContainer).on('click', '#stand', function () {
-            Game.play.finish();
-            return false;
-        });
-
-        $(controlsContainer).on('click', '#restart', function () {
-            $(".card").remove();
-            $(controlsContainer).on();
-            $(controlsContainer).find('#stand').removeClass('dis');
-            $(controlsContainer).find('#hit').removeClass('dis');
-            $(controlsContainer).find('#restart').hide();
-            Game.init();
-            return false;
-        });
+        $('#new-game')
+            .transition({ x: '0' }, 600, 'in-out');
+        $('#logo')
+            .transition({ perspective: '439px', rotateY: '0deg' })
+            .transition({ perspective: '439px', rotateY: '360deg' }, 600);
     },
-    init: function () {
+    startNew: function () {
         playerHand = Game.createHand('player');
         dealerHand = Game.createHand('dealer');
 
@@ -199,6 +186,34 @@ Game = {
         if (playerHand.score() >= 21) {
             Game.play.finish();
         }
+    },
+    init: function () {
+        Game.startScreen();
+
+        $("#new-game").on('click', function () {
+            Game.startNew();
+            $("#cover").hide();
+            $('#game').css('visibility', 'visible');
+            return false;
+        });
+
+        $(controlsContainer).on('click', '#hit:not(.dis)', function () {
+            Game.play.evaluate();
+            return false;
+        });
+
+        $(controlsContainer).on('click', '#stand:not(.dis)', function () {
+            Game.play.finish();
+            return false;
+        });
+
+        $(controlsContainer).on('click', '#restart', function () {
+            $(".card").remove();
+            $(controlsContainer).find('#hit, #stand').removeClass('dis');
+            $(controlsContainer).find('#restart').hide();
+            Game.startNew();
+            return false;
+        });
     }
 };
 
@@ -289,10 +304,9 @@ UserException = function (message) {
 };
 
 $(document).ready(function () {
-    Game.initControls();
     Game.init();
 });
 
 // TODO
-// Prevent hit button from working while disabled
-// Get cover and loader (if loading is needed) working
+// - Move away from jquery dependency
+// - Replace global variables for options object
