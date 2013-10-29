@@ -1,18 +1,16 @@
 /**
- * JSblackjack 0.2.1 by @vctrfrnndz (https://github.com/vctrfrnndz/JSblackjack)
+ * JSblackjack 0.2.1 (https://github.com/vctrfrnndz/JSblackjack)
+ * (c) 2012-2013 Victor Fernandez <victor@vctrfrnndz.com>
+ * MIT Licensed.
  */
 
 // TODO
-// - Move away from jquery dependency
+// - Move away from jquery/transit dependency
 // - Replace global variables for options object
+// - Make score status updates only after the cards are visually dealed
+// - Implement betting
 
 var Card, Game, Hand, UserException, barContainer, cardValue, controlsContainer, dealerContainer, dealerHand, hiddenCard, playerContainer, playerHand, suits;
-
-hiddenCard = null;
-
-playerHand = null;
-
-dealerHand = null;
 
 suits = ["club", "diamond", "heart", "spade"];
 
@@ -29,15 +27,16 @@ barContainer = "#msg";
 Game = {
     deal: function () {
         var cardNumber, cardSuit;
+
         cardSuit = Math.floor(Math.random() * suits.length);
         cardNumber = Math.floor(Math.random() * cardValue.length);
+
         return new Card(cardSuit, cardNumber);
     },
+
     hitUser: function (role) {
         var cardObject, newCard, userContainer;
-        cardObject = null;
-        newCard = null;
-        userContainer = null;
+
         if (role === 'player') {
             cardObject = playerHand.hitMe();
             userContainer = playerContainer;
@@ -49,14 +48,19 @@ Game = {
         else {
             throw new UserException('hitUser function needs a role');
         }
+
         newCard = cardObject.getCard();
+
         $(newCard).appendTo(userContainer).addClass('placed');
     },
+
     createHand: function (role) {
         var card, newHand, userCard, userCards, userContainer, i, len;
+
         newHand = new Hand();
         userCards = newHand.getHand();
         userContainer = null;
+
         if (role === 'player') {
             userContainer = playerContainer;
         }
@@ -81,10 +85,13 @@ Game = {
         if (role === 'player') {
             Game.helpers.updateBar('Your hand is '+ newHand.score() + ', press Hit or Stand');
         }
+
         return newHand;
     },
+
     declareWinner: function (playerHand, delaerHand) {
         var dealerScored, gameScore, playerScored;
+
         playerScored = 'You got ' + playerHand.score();
         dealerScored = 'dealer got ' + dealerHand.score();
         gameScore = playerScored + ', ' + dealerScored;
@@ -113,6 +120,7 @@ Game = {
             return gameScore + '! You lose!';
         }
     },
+
     helpers: {
         dealAnimate: function () {
             $('.hand').each(function () {
@@ -129,13 +137,16 @@ Game = {
                 }, 200);
             });
         },
+
         updateBar: function (message) {
             $(barContainer).text(message);
         },
+
         stopControls: function () {
             $(controlsContainer).find("#hit, #stand").addClass('dis');
         }
     },
+
     play: {
         finish: function () {
             Game.helpers.stopControls();
@@ -144,6 +155,7 @@ Game = {
             Game.helpers.updateBar(Game.declareWinner(playerHand, dealerHand));
             $(controlsContainer).find("#restart").show();
         },
+
         evaluate: function () {
             if (playerHand.score() >= 21) {
                 Game.play.finish();
@@ -170,6 +182,7 @@ Game = {
             }
         }
     },
+
     startScreen: function() {
         $('#cover').css('visibility', 'visible');
 
@@ -185,6 +198,7 @@ Game = {
             .transition({ perspective: '439px', rotateY: '0deg' })
             .transition({ perspective: '439px', rotateY: '360deg' }, 600);
     },
+
     startNew: function () {
         playerHand = Game.createHand('player');
         dealerHand = Game.createHand('dealer');
@@ -195,6 +209,7 @@ Game = {
             Game.play.finish();
         }
     },
+
     init: function () {
         Game.startScreen();
 
@@ -227,18 +242,23 @@ Game = {
 
 Card = function (cardSuit, cardNumber) {
     var color, number, suit;
+
     suit = cardSuit;
     number = cardNumber;
     color = suit === 1 || suit === 2 ? 'red' : 'black';
+
     this.getNumber = function () {
         return number;
     };
+
     this.getSuit = function () {
         return suit;
     };
+
     this.getLetter = function () {
         return cardValue[number];
     };
+
     this.getValue = function () {
         if (number === 1) {
             return 11;
@@ -250,7 +270,8 @@ Card = function (cardSuit, cardNumber) {
             return 10;
         }
     };
-    this.getCard = function(type) {
+
+    this.getCard = function (type) {
         var card;
 
         if (type === 'hidden') {
@@ -262,46 +283,60 @@ Card = function (cardSuit, cardNumber) {
             card += '"' + ' data-number="' + cardValue[number] + '">';
             card += '<div class="cover"></div><div class="deck"></div>';
         }
+
         return card;
     };
 };
 
 Hand = function () {
     var card1, card2, handCards;
+
     card1 = Game.deal();
     card2 = Game.deal();
     handCards = [card1, card2];
+
     this.getFirstCard = function () {
         return card1;
     };
+
     this.getSecondCard = function () {
         return card2;
     };
+
     this.getHand = function () {
         return handCards;
     };
+
     this.score = function () {
         var aces, card, sum, i, len;
+
         sum = 0;
         aces = 0;
+
         for (i = 0, len = handCards.length; i < len; i++) {
             card = handCards[i];
             sum += handCards[i].getValue();
             sum += 1;
+
             if (handCards[i].getValue() === 11) {
                 aces += 1;
             }
         }
+
         while (aces > 0 && sum > 21) {
             sum -= 10;
             aces--;
         }
+
         return sum;
     };
+
     this.hitMe = function () {
         var randomCard;
+
         randomCard = Game.deal();
         handCards.push(randomCard);
+
         return randomCard;
     };
 };
