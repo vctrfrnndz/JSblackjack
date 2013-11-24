@@ -4,13 +4,14 @@
  * MIT Licensed.
  */
 
-// TODO
-// - Move away from jquery/transit dependency
-// - Replace global variables for options object
+// TODOS for v1.0
+// - Add loading screen, check when webfont has loaded
 // - Make score status updates only after the cards are visually dealed
+// - Make it really responsive
+// - Replace global variables for options object
 // - Implement betting
 
-var Card, Game, Hand, UserException, barContainer, cardValue, controlsContainer, dealerContainer, dealerHand, hiddenCard, playerContainer, playerHand, suits;
+var Card, Game, Hand, barContainer, cardValue, controlsContainer, dealerContainer, dealerHand, hiddenCard, playerContainer, playerHand, suits;
 
 suits = ["club", "diamond", "heart", "spade"];
 
@@ -46,7 +47,7 @@ Game = {
             userContainer = dealerContainer;
         }
         else {
-            throw new UserException('hitUser function needs a role');
+            throw 'hitUser function needs a role';
         }
 
         newCard = cardObject.getCard();
@@ -68,7 +69,7 @@ Game = {
             userContainer = dealerContainer;
         }
         else {
-            throw new UserException('createHand function needs a role');
+            throw 'createHand function needs a role';
         }
         for (i = 0, len = userCards.length; i < len; i++) {
             card = userCards[i];
@@ -214,6 +215,7 @@ Game = {
         Game.startScreen();
 
         $("#new-game").on('click', function () {
+            $(".webfont-preload").remove();
             Game.startNew();
             $("#cover").hide();
             $('#game').css('visibility', 'visible');
@@ -339,11 +341,6 @@ Hand = function () {
 
         return randomCard;
     };
-};
-
-UserException = function (message) {
-    this.message = message;
-    this.name = 'UserException';
 };
 
 $(document).ready(function () {

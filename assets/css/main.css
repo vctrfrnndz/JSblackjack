@@ -864,7 +864,6 @@ a {
   font-weight: bold;
   color: white;
   border: 0.12em solid #a83213;
-  background-color: #a83213;
   text-shadow: 0 1px rgba(0, 0, 0, 0.5);
   background-color: #a83213;
   background-repeat: repeat-x;
@@ -902,7 +901,7 @@ a {
   -moz-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.3);
   -webkit-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.3);
 }
-.btn  + .btn {
+.btn + .btn {
   margin-left: 0.5em;
 }
 .btn:hover {
@@ -1111,6 +1110,15 @@ a {
   box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.5);
   -moz-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.5);
   -webkit-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.5);
+}
+.webfont-preload {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }
 @-webkit-keyframes place {
   0% {
