@@ -295,6 +295,7 @@ body {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  min-width: 400px;
 }
 a {
   color: black;
@@ -396,26 +397,9 @@ a {
   left: 0;
   width: 100%;
   text-align: center;
-  /*
-    &#dealer .card {
-        margin-top: -10em;
-    }
-    &#player .card {
-        margin-bottom: -20em;
-    }
-
-    &#player,
-    &#dealer {
-        .card {
-            transition: 0.5s margin;
-
-            &.placed {
-                margin: 0.5em;
-            }
-        }
-    }
-    */
-
+}
+.hand#dealer .card.placed {
+  -webkit-animation: place-reversed 0.45s;
 }
 .card {
   text-align: left;
@@ -441,19 +425,19 @@ a {
   position: relative;
   display: none;
   z-index: 10;
-  transition: all ease-in 1s;
 }
 .card.placed {
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  -webkit-animation: place 0.35s;
+  -webkit-animation: place 0.45s;
   -webkit-animation-fill-mode: forwards;
 }
 .card.rolled {
   display: inline-block;
   *display: inline;
   *zoom: 1;
+  -webkit-animation: roll 0.65s;
 }
 .card.unknown {
   background: #ffffff url(../img/card_texture.png);
@@ -1130,12 +1114,20 @@ a {
     left: 0;
   }
 }
-@media screen and (max-width: 800px) {
-  #table {
-    height: 300px;
+@-webkit-keyframes place-reversed {
+  0% {
+    position: relative;
+    right: -200%;
   }
-  .card {
-    font-size: 40%;
-    margin-left: -3em !important;
+  100% {
+    right: 0;
+  }
+}
+@-webkit-keyframes roll {
+  0% {
+    -webkit-transform: translate(0px, 0px) perspective(600px) rotateX(0deg);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px) perspective(600px) rotateX(360deg);
   }
 }

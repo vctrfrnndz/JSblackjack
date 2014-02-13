@@ -17,6 +17,7 @@
 @mainWidth: 100%;
 @mainHeight: 700px;
 @controlsHeight: 100px;
+@cardsSpeed: 0.45s;
 
 //// MIXINS
 
@@ -68,6 +69,8 @@ body {
 
     position: relative;
     overflow: hidden;
+
+    min-width: 400px;
 }
 
 a {
@@ -211,25 +214,15 @@ a {
     text-align: center;
 
     @deckOffset: 22em;
-    /*
-    &#dealer .card {
-        margin-top: -10em;
-    }
-    &#player .card {
-        margin-bottom: -20em;
-    }
 
-    &#player,
     &#dealer {
         .card {
-            transition: 0.5s margin;
-
             &.placed {
-                margin: 0.5em;
+                -webkit-animation: place-reversed @cardsSpeed;
             }
         }
     }
-    */
+
 }
 
 //// CARD DECK
@@ -254,24 +247,21 @@ a {
 
     z-index: 10;
 
-    transition: all ease-in 1s;
-
     &.placed {
         .inline-block;
-        -webkit-animation: place 0.35s;
+        -webkit-animation: place @cardsSpeed;
         -webkit-animation-fill-mode: forwards;  
     }
 
     &.rolled {
         .inline-block;
-        //-webkit-transform: rotateY(0deg);
+        -webkit-animation: roll 0.65s;
     }
 
     &.unknown {
         background: white url(../img/card_texture.png);
         background-size: 24px;
         border: 0.8em solid white;
-        //-webkit-transform: rotateY(-180deg);
     }
 
     .deck {
@@ -899,15 +889,4 @@ a {
 }
 
 .animations;
-
-
-@media screen and (max-width: 800px) {
-    #table {
-        height: 300px;
-    }
-    .card {
-        font-size: 40%;
-        margin-left: -3em !important;
-    }
-}
 

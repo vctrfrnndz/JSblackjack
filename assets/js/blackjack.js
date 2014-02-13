@@ -6,7 +6,6 @@
 
 // TODOS for v1.0
 // - Make score status updates only after the cards are visually dealed
-// - Make it really responsive
 // - Replace global variables for options object
 // - Implement betting
 
@@ -136,7 +135,7 @@ Game = {
                         clearInterval(this);
                     }
                     counter++;
-                }, 200);
+                }, 350);
             });
         },
 
@@ -151,9 +150,15 @@ Game = {
 
     play: {
         finish: function () {
+            var hiddenClass = $(hiddenCard).attr('class'),
+                hiddenNumber = $(hiddenCard).attr('data-number');
+
             Game.helpers.stopControls();
-            $(dealerContainer).find(".card:first-child").remove();
-            $(hiddenCard).prependTo(dealerContainer).addClass('rolled');
+
+            $(dealerContainer).find(".card:first-child")
+                .attr('class', hiddenClass).attr('data-number', hiddenNumber)
+                .append('<div class="cover"></div><div class="deck"></div>').addClass('rolled');
+
             Game.helpers.updateBar(Game.declareWinner(playerHand, dealerHand));
             $(controlsContainer).find("#restart").show();
         },
