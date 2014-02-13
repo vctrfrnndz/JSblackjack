@@ -254,6 +254,8 @@ a {
 
     z-index: 10;
 
+    transition: all ease-in 1s;
+
     &.placed {
         .inline-block;
         -webkit-animation: place 0.35s;
@@ -262,12 +264,14 @@ a {
 
     &.rolled {
         .inline-block;
+        //-webkit-transform: rotateY(0deg);
     }
 
     &.unknown {
         background: white url(../img/card_texture.png);
         background-size: 24px;
         border: 0.8em solid white;
+        //-webkit-transform: rotateY(-180deg);
     }
 
     .deck {

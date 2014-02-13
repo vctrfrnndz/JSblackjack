@@ -441,6 +441,7 @@ a {
   position: relative;
   display: none;
   z-index: 10;
+  transition: all ease-in 1s;
 }
 .card.placed {
   display: inline-block;
@@ -1122,14 +1123,11 @@ a {
 }
 @-webkit-keyframes place {
   0% {
-    position: absolute;
+    position: relative;
     left: -200%;
   }
-  1% {
-    position: relative;
-  }
   100% {
-    left: none;
+    left: 0;
   }
 }
 @media screen and (max-width: 800px) {

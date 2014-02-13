@@ -5,7 +5,6 @@
  */
 
 // TODOS for v1.0
-// - Add loading screen, check when webfont has loaded
 // - Make score status updates only after the cards are visually dealed
 // - Make it really responsive
 // - Replace global variables for options object
@@ -74,6 +73,7 @@ Game = {
         for (i = 0, len = userCards.length; i < len; i++) {
             card = userCards[i];
             userCard = userCards[i].getCard();
+
             if (role === 'dealer' && i === 0) {
                 userCard = userCards[i].getCard('hidden');
                 hiddenCard = userCards[i].getCard();
@@ -81,6 +81,7 @@ Game = {
             else {
                 userCard = userCards[i].getCard();
             }
+
             $(userContainer).append(userCard);
         }
         if (role === 'player') {
@@ -262,11 +263,11 @@ Card = function (cardSuit, cardNumber) {
     };
 
     this.getValue = function () {
-        if (number === 1) {
+        if (number === 0) {
             return 11;
         }
-        else if (number > 1 && number < 10) {
-            return number;
+        else if (number >= 1 && number < 10) {
+            return number + 1;
         }
         else {
             return 10;
@@ -318,7 +319,6 @@ Hand = function () {
         for (i = 0, len = handCards.length; i < len; i++) {
             card = handCards[i];
             sum += handCards[i].getValue();
-            sum += 1;
 
             if (handCards[i].getValue() === 11) {
                 aces += 1;
