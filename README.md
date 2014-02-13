@@ -1,6 +1,6 @@
 JSblackjack
 ===========
 
-My first ever JS app, a blackjack game. [Demo](http://vctrfrnndz.github.io/JSblackjack/).
+My first ever JS app, a blackjack game. [Try it out](http://vctrfrnndz.github.io/JSblackjack/)!.
 
-By [@vctrfrnndz](http://twitter.com/vctrfrnndz).
+Crafted by [@vctrfrnndz](http://twitter.com/vctrfrnndz).
