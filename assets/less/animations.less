@@ -9,4 +9,23 @@
 
 		}
 	}
+
+	@-webkit-keyframes place-reversed {
+		0% { 
+			position: relative;
+			right: -200%;
+		}
+		100% { 
+			right: 0;
+		}
+	}
+
+	@-webkit-keyframes roll {
+		0% { 
+			-webkit-transform: translate(0px, 0px) perspective(600px) rotateX(0deg);
+		}
+		100% {
+			-webkit-transform: translate(0px, 0px) perspective(600px) rotateX(360deg);
+		}
+	}
 }
