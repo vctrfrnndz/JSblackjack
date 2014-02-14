@@ -23,19 +23,24 @@
             </div>
 
             <div id="game">
+                <div id="statusbar">
+                    <div class="status">
+                        Current Bet: <span id="current-bet">0</span><br>
+                        Total: <span id="bet">0</span>
+                    </div>
+
+                    <a href="#" id="raise" class="btn btn-raise">Raise bet</a>
+                    <a href="#" id="reduce" class="btn btn-reduce">Reduce bet</a>
+                </div>
 
                 <div id="table">
-                    <div id="dealer" class="hand">
-                        
-                    </div>
+                    <div id="dealer" class="hand"></div>
 
-                    <div id="player" class="hand">
-                        
-                    </div>
+                    <div id="player" class="hand"></div>
                 </div>
 
                 <div id="controls">
-                    <div id="msg" class="notification"></div>
+                    <div id="msg" class="notification dealing"></div>
                     <br>
                     <a href="#" id="hit" class="btn btn-hit">Hit</a>
                     <a href="#" id="stand" class="btn btn-stand">Stand</a>

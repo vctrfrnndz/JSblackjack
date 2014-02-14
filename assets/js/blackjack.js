@@ -9,7 +9,7 @@
 // - Replace global variables for options object
 // - Implement betting
 
-var Card, Game, Hand, barContainer, cardValue, controlsContainer, dealerContainer, dealerHand, hiddenCard, playerContainer, playerHand, suits;
+var Card, Game, Hand, barContainer, cardValue, controlsContainer, dealerContainer, dealerHand, hiddenCard, playerContainer, playerHand, suits, dealerSpeed, bet;
 
 suits = ["club", "diamond", "heart", "spade"];
 
@@ -22,6 +22,12 @@ dealerContainer = "#dealer";
 controlsContainer = "#controls";
 
 barContainer = "#msg";
+
+dealerSpeed = 350;
+
+bet = 0;
+
+currentBet = 0;
 
 Game = {
     deal: function () {
@@ -75,6 +81,7 @@ Game = {
 
             if (role === 'dealer' && i === 0) {
                 userCard = userCards[i].getCard('hidden');
+
                 hiddenCard = userCards[i].getCard();
             }
             else {
@@ -84,10 +91,31 @@ Game = {
             $(userContainer).append(userCard);
         }
         if (role === 'player') {
-            Game.helpers.updateBar('Your hand is '+ newHand.score() + ', press Hit or Stand');
+            Game.helpers.updateBar('Your hand is '+ newHand.score() + ', press Hit or Stand', dealerSpeed * 3);
         }
 
         return newHand;
+    },
+
+    winActions: function() {
+        bet = bet + currentBet;
+
+        $('#current-bet').text(currentBet);
+        $('#bet').text(bet);
+    },
+
+    tieActions: function() {
+        bet = bet + (currentBet / 2);
+
+        $('#current-bet').text(currentBet);
+        $('#bet').text(bet);
+    },
+
+    looseActions: function() {
+        bet = bet - currentBet;
+
+        $('#current-bet').text(currentBet);
+        $('#bet').text(bet);
     },
 
     declareWinner: function (playerHand, delaerHand) {
@@ -98,26 +126,40 @@ Game = {
         gameScore = playerScored + ', ' + dealerScored;
 
         if (playerHand.score() === 21) {
+            Game.winActions();
+
             return playerScored + '! Blackjack!';
         }
         else if (playerHand.score() > 21) {
             if (dealerHand.score() > 21) {
+                Game.tieActions();
+
                 return gameScore + '. You tied!';
             }
             else {
+                Game.looseActions();
+
                 return gameScore + '. You lose!';
             }
         }
         else if (dealerHand.score() > 21) {
+            Game.winActions();
+
             return gameScore + '. You win!';
         }
         else if (playerHand.score() > dealerHand.score()) {
+            Game.winActions();
+
             return gameScore + '. You win!';
         }
         else if (playerHand.score() === dealerHand.score()) {
+            Game.tieActions();
+
             return gameScore + '. You tied!';
         }
         else {
+            Game.looseActions();
+
             return gameScore + '! You lose!';
         }
     },
@@ -131,20 +173,36 @@ Game = {
                 currentCard = currentHand.find(".card");
                 animation = setInterval(function () {
                     $(currentCard[counter]).addClass('placed');
+
                     if (counter === currentCard.length) {
                         clearInterval(this);
                     }
+
                     counter++;
-                }, 350);
+                }, dealerSpeed);
             });
         },
 
-        updateBar: function (message) {
-            $(barContainer).text(message);
+        updateBar: function (message, delay, finish) {
+            $(barContainer).text('Dealing ...').addClass('dealing');
+
+            Game.helpers.stopControls();
+
+            setTimeout(function() {
+                $(barContainer).text(message).removeClass('dealing');
+
+                if(!$("#restart").is(":visible")) {
+                    Game.helpers.initControls();
+                }
+            }, delay || dealerSpeed);
         },
 
         stopControls: function () {
             $(controlsContainer).find("#hit, #stand").addClass('dis');
+        },
+
+        initControls: function () {
+            $(controlsContainer).find("#hit, #stand").removeClass('dis');
         }
     },
 
@@ -225,6 +283,26 @@ Game = {
             Game.startNew();
             $("#cover").hide();
             $('#game').css('visibility', 'visible');
+            return false;
+        });
+
+        $("#statusbar").on('click', '#raise:not(.dis)', function () {
+            currentBet = currentBet + 200;
+
+            $('#current-bet').text(currentBet);
+
+            return false;
+        });
+
+        $("#statusbar").on('click', '#reduce:not(.dis)', function () {
+            currentBet = currentBet - 200;
+
+            if(currentBet < 0) {
+                currentBet = 0;
+            }
+
+            $('#current-bet').text(currentBet);
+
             return false;
         });
 

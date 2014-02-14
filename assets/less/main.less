@@ -17,7 +17,7 @@
 @mainWidth: 100%;
 @mainHeight: 700px;
 @controlsHeight: 100px;
-@cardsSpeed: 0.45s;
+@cardsSpeed: 0.35s;
 
 //// MIXINS
 
@@ -231,15 +231,15 @@ a {
     text-align: left;
     font-size: 67.5%;
     background-color: white;
-    padding: 0.8em;
+    padding: 8px;
 
     .shadow(0 0 10px 0 black);
     .shadow(0px 0px 1px 1px lighten(@creamTextLite,25%));
 
     .round(0.4em);
-    .size(13.5em,18em);
+    .size(149px, 195px);
 
-    margin: 0.5em;
+    margin: 5px;
     cursor: pointer;
     position: relative;
     
@@ -270,7 +270,7 @@ a {
         &:after {
             position: absolute;
             font-size: 1.5em;
-            bottom:1.5em;
+            bottom: 30px;
             right:0.25em;
             .rotate(180deg);
         }
@@ -278,7 +278,7 @@ a {
         &:before {
             position: absolute;
             font-size: 1.5em;
-            top:1.5em;
+            top: 30px;
             left:0.25em;
         }
     }
@@ -823,6 +823,11 @@ a {
 
     .shadow(0 0.1em 0.2em 0 rgba(0,0,0,0.3) ~"," inset 0 0.1em 0 0 rgba(255,255,255,0.3));
 
+    -webkit-transition: opacity 0.3s; 
+    -moz-transition: opacity 0.3s; 
+    -o-transition: opacity 0.3s; 
+    transition: opacity 0.3s;
+
     & + .btn {
         margin-left: 0.5em;
     }
@@ -867,16 +872,29 @@ a {
     #gradient > .vertical(darken(@creamTextLite, 0%),darken(@creamTextLite, 10%));
 
     color:white;
-    font-weight: bold;
+    font-size: 1.2em;
+    letter-spacing: -0.055em;
     .text-drop-black;
 
     padding: 0.8em;
     margin: 0 1em;
     margin-bottom: 1em;
 
+    min-width: 340px;
+
     .round(0.3em);
 
     .shadow(0 0.1em 0.2em 0 rgba(0,0,0,0.3) ~"," inset 0 -0.1em 0 0 rgba(0,0,0,0.1) ~"," inset 0 0.1em 0 0 rgba(255,255,255,0.5));
+
+    -webkit-transition: opacity 0.3s; 
+    -moz-transition: opacity 0.3s; 
+    -o-transition: opacity 0.3s; 
+    transition: opacity 0.3s;
+
+    &.dealing {
+        .shadow(0 0.1em 0.2em 0 rgba(0,0,0,0.3) ~"," inset 0 -0.1em 0 0 rgba(0,0,0,0.1));
+        opacity: 0.3;
+    }
 }
 
 .webfont-preload {

@@ -399,13 +399,13 @@ a {
   text-align: center;
 }
 .hand#dealer .card.placed {
-  -webkit-animation: place-reversed 0.45s;
+  -webkit-animation: place-reversed 0.35s;
 }
 .card {
   text-align: left;
   font-size: 67.5%;
   background-color: white;
-  padding: 0.8em;
+  padding: 8px;
   box-shadow: 0 0 10px 0 #000000;
   -moz-box-shadow: 0 0 10px 0 #000000;
   -webkit-box-shadow: 0 0 10px 0 #000000;
@@ -418,9 +418,9 @@ a {
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  width: 13.5em;
-  height: 18em;
-  margin: 0.5em;
+  width: 149px;
+  height: 195px;
+  margin: 5px;
   cursor: pointer;
   position: relative;
   display: none;
@@ -430,7 +430,7 @@ a {
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  -webkit-animation: place 0.45s;
+  -webkit-animation: place 0.35s;
   -webkit-animation-fill-mode: forwards;
 }
 .card.rolled {
@@ -450,7 +450,7 @@ a {
 .card .deck:after {
   position: absolute;
   font-size: 1.5em;
-  bottom: 1.5em;
+  bottom: 30px;
   right: 0.25em;
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
@@ -461,7 +461,7 @@ a {
 .card .deck:before {
   position: absolute;
   font-size: 1.5em;
-  top: 1.5em;
+  top: 30px;
   left: 0.25em;
 }
 .card.heart .deck:after,
@@ -885,6 +885,10 @@ a {
   box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.3);
   -moz-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.3);
   -webkit-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.3);
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 .btn + .btn {
   margin-left: 0.5em;
@@ -1081,11 +1085,13 @@ a {
   /* IE8+ */
 
   color: white;
-  font-weight: bold;
+  font-size: 1.2em;
+  letter-spacing: -0.055em;
   text-shadow: 0 1px rgba(0, 0, 0, 0.5);
   padding: 0.8em;
   margin: 0 1em;
   margin-bottom: 1em;
+  min-width: 340px;
   border-radius: 0.3em;
   -webkit-border-radius: 0.3em;
   -moz-border-radius: 0.3em;
@@ -1095,6 +1101,16 @@ a {
   box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.5);
   -moz-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.5);
   -webkit-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1) , inset 0 0.1em 0 0 rgba(255, 255, 255, 0.5);
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.notification.dealing {
+  box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.3) , inset 0 -0.1em 0 0 rgba(0, 0, 0, 0.1);
+  opacity: 0.3;
 }
 .webfont-preload {
   visibility: hidden;
