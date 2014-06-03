@@ -1121,6 +1121,9 @@ a {
   height: 0;
   overflow: hidden;
 }
+.sounds audio {
+  display: none;
+}
 @-webkit-keyframes place {
   0% {
     position: relative;

@@ -4,12 +4,7 @@
  * MIT Licensed.
  */
 
-// TODOS for v1.0
-// - Make score status updates only after the cards are visually dealed
-// - Replace global variables for options object
-// - Implement betting
-
-var Card, Game, Hand, barContainer, cardValue, controlsContainer, dealerContainer, dealerHand, hiddenCard, playerContainer, playerHand, suits, dealerSpeed, bet;
+var Card, Game, Hand, Bet, barContainer, cardValue, controlsContainer, dealerContainer, dealerHand, hiddenCard, playerContainer, playerHand, suits, dealerSpeed, userMoney, currentBet, minimumBet, winSound;
 
 suits = ["club", "diamond", "heart", "spade"];
 
@@ -23,11 +18,15 @@ controlsContainer = "#controls";
 
 barContainer = "#msg";
 
+minimumBet = 100;
+
 dealerSpeed = 350;
 
-bet = 0;
+userMoney = 1100;
 
-currentBet = 0;
+currentBet = minimumBet;
+
+winSound = ".audio .win";
 
 Game = {
     deal: function () {
@@ -89,8 +88,9 @@ Game = {
             }
 
             $(userContainer).append(userCard);
+            Game.sounds.deal();
         }
-        if (role === 'player') {
+        if (role === 'player' && newHand.score() < 21) {
             Game.helpers.updateBar('Your hand is '+ newHand.score() + ', press Hit or Stand', dealerSpeed * 3);
         }
 
@@ -98,24 +98,80 @@ Game = {
     },
 
     winActions: function() {
-        bet = bet + currentBet;
+        userMoney = userMoney + (currentBet * 2);
+        currentBet = minimumBet;
 
-        $('#current-bet').text(currentBet);
-        $('#bet').text(bet);
+        Game.updateMoney();
+        Game.sounds.win();
     },
 
     tieActions: function() {
-        bet = bet + (currentBet / 2);
+        userMoney = userMoney + (currentBet / 2);
+        currentBet = minimumBet;
 
-        $('#current-bet').text(currentBet);
-        $('#bet').text(bet);
+        Game.updateMoney();
     },
 
     looseActions: function() {
-        bet = bet - currentBet;
+        userMoney = userMoney - currentBet;
+        currentBet = minimumBet;
+
+        Game.updateMoney();
+        Game.sounds.loose();
+    },
+
+    sounds: {
+        stop: function() {
+            $('.sounds').find('audio').each(function() {
+                var sound = $(this).get(0);
+
+                sound.pause();
+                sound.currentTime = 0;
+            });
+        },
+        win: function() {
+            this.stop();
+            $('.sounds').find('.win').get(0).play();
+        },
+        loose: function() {
+            this.stop();
+            $('.sounds').find('.loose').get(0).play();
+        },
+        tie: function() {
+            this.stop();
+            $('.sounds').find('.tie').get(0).play();
+        },
+        deal: function() {
+            this.stop();
+            // $('.sounds').find('.deal').get(0).loop = true;
+            //$('.sounds').find('.deal').get(0).play();
+        },
+        bet: function() {
+            $('.sounds').find('.bet').get(0).play();
+        }
+    },
+
+    updateMoney: function() {
+        if(userMoney < 0) {
+            userMoney = 0;
+        }
+
+        if(currentBet > minimumBet) {
+            $("#statusbar #reduce").removeClass('dis');
+        } else {
+            currentBet = minimumBet;
+            
+            $("#statusbar #reduce").addClass('dis');
+        }
+
+        if(userMoney < minimumBet) {
+            $("#statusbar #raise").addClass('dis');
+        } else {
+            $("#statusbar #raise").removeClass('dis');
+        }
 
         $('#current-bet').text(currentBet);
-        $('#bet').text(bet);
+        $('#user-money').text(userMoney);
     },
 
     declareWinner: function (playerHand, delaerHand) {
@@ -211,6 +267,10 @@ Game = {
             var hiddenClass = $(hiddenCard).attr('class'),
                 hiddenNumber = $(hiddenCard).attr('data-number');
 
+            if (dealerHand.score() < 17) {
+                Game.hitUser('dealer');
+            }
+
             Game.helpers.stopControls();
 
             $(dealerContainer).find(".card:first-child")
@@ -277,6 +337,7 @@ Game = {
 
     init: function () {
         Game.startScreen();
+        Game.updateMoney();
 
         $("#new-game").on('click', function () {
             $(".webfont-preload").remove();
@@ -287,21 +348,23 @@ Game = {
         });
 
         $("#statusbar").on('click', '#raise:not(.dis)', function () {
-            currentBet = currentBet + 200;
+            currentBet = currentBet + minimumBet;
+            userMoney = userMoney - minimumBet;
 
-            $('#current-bet').text(currentBet);
+            Game.sounds.bet();
+
+            Game.updateMoney();
 
             return false;
         });
 
         $("#statusbar").on('click', '#reduce:not(.dis)', function () {
-            currentBet = currentBet - 200;
+            currentBet = currentBet - minimumBet;
+            userMoney = userMoney + minimumBet;
 
-            if(currentBet < 0) {
-                currentBet = 0;
-            }
+            Game.sounds.bet();
 
-            $('#current-bet').text(currentBet);
+            Game.updateMoney();
 
             return false;
         });
@@ -424,6 +487,13 @@ Hand = function () {
 
         return randomCard;
     };
+};
+
+// WIP
+Money = function() {
+    var userMoney,
+        minimumBet;
+
 };
 
 $(document).ready(function () {

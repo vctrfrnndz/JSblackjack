@@ -26,11 +26,11 @@
                 <div id="statusbar">
                     <div class="status">
                         Current Bet: <span id="current-bet">0</span><br>
-                        Total: <span id="bet">0</span>
+                        Total: <span id="user-money">0</span>
                     </div>
 
-                    <a href="#" id="raise" class="btn btn-raise">Raise bet</a>
-                    <a href="#" id="reduce" class="btn btn-reduce">Reduce bet</a>
+                    <a href="#" id="raise" class="btn btn-raise">+ Raise</a>
+                    <a href="#" id="reduce" class="btn btn-reduce">– Reduce</a>
                 </div>
 
                 <div id="table">
@@ -58,6 +58,14 @@
             <span class="card-king"></span>
             <span class="card-queen"></span>
             <span class="card-jack"></span>
+        </div>
+
+        <div class="sounds">
+            <audio class="win" src="assets/sounds/win.mp3" autobuffer></audio>
+            <audio class="loose" src="assets/sounds/loose.mp3" autobuffer></audio>
+            <audio class="tie" src="assets/sounds/tie.mp3" autobuffer></audio>
+            <audio class="bet" src="assets/sounds/bet.mp3" autobuffer></audio>
+            <audio class="deal" src="assets/sounds/deal.mp3" autobuffer></audio>
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
