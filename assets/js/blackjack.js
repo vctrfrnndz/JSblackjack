@@ -81,7 +81,6 @@ Game = {
             }
 
             $(userContainer).append(userCard);
-            Game.sounds.deal();
         }
         if (role === 'player' && newHand.score() < 21) {
             Game.helpers.updateBar('Your hand is '+ newHand.score() + ', press Hit or Stand', dealerSpeed * 3);
@@ -147,7 +146,6 @@ Game = {
             return gameScore + '. You tied!';
         }
         else {
-            Game.looseActions();
 
             return gameScore + '! You lose!';
         }
