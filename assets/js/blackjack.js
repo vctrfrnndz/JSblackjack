@@ -18,15 +18,8 @@ controlsContainer = "#controls";
 
 barContainer = "#msg";
 
-minimumBet = 100;
-
 dealerSpeed = 350;
 
-userMoney = 1100;
-
-currentBet = minimumBet;
-
-winSound = ".audio .win";
 
 Game = {
     deal: function () {
@@ -97,60 +90,6 @@ Game = {
         return newHand;
     },
 
-    winActions: function() {
-        userMoney = userMoney + (currentBet * 2);
-        currentBet = minimumBet;
-
-        Game.updateMoney();
-        Game.sounds.win();
-    },
-
-    tieActions: function() {
-        userMoney = userMoney + (currentBet / 2);
-        currentBet = minimumBet;
-
-        Game.updateMoney();
-    },
-
-    looseActions: function() {
-        userMoney = userMoney - currentBet;
-        currentBet = minimumBet;
-
-        Game.updateMoney();
-        Game.sounds.loose();
-    },
-
-    sounds: {
-        stop: function() {
-            $('.sounds').find('audio').each(function() {
-                var sound = $(this).get(0);
-
-                sound.pause();
-                sound.currentTime = 0;
-            });
-        },
-        win: function() {
-            this.stop();
-            $('.sounds').find('.win').get(0).play();
-        },
-        loose: function() {
-            this.stop();
-            $('.sounds').find('.loose').get(0).play();
-        },
-        tie: function() {
-            this.stop();
-            $('.sounds').find('.tie').get(0).play();
-        },
-        deal: function() {
-            this.stop();
-            // $('.sounds').find('.deal').get(0).loop = true;
-            //$('.sounds').find('.deal').get(0).play();
-        },
-        bet: function() {
-            $('.sounds').find('.bet').get(0).play();
-        }
-    },
-
     updateMoney: function() {
         if(userMoney < 0) {
             userMoney = 0;
@@ -182,34 +121,28 @@ Game = {
         gameScore = playerScored + ', ' + dealerScored;
 
         if (playerHand.score() === 21) {
-            Game.winActions();
 
             return playerScored + '! Blackjack!';
         }
         else if (playerHand.score() > 21) {
             if (dealerHand.score() > 21) {
-                Game.tieActions();
 
                 return gameScore + '. You tied!';
             }
             else {
-                Game.looseActions();
 
                 return gameScore + '. You lose!';
             }
         }
         else if (dealerHand.score() > 21) {
-            Game.winActions();
 
             return gameScore + '. You win!';
         }
         else if (playerHand.score() > dealerHand.score()) {
-            Game.winActions();
 
             return gameScore + '. You win!';
         }
         else if (playerHand.score() === dealerHand.score()) {
-            Game.tieActions();
 
             return gameScore + '. You tied!';
         }
@@ -337,35 +270,12 @@ Game = {
 
     init: function () {
         Game.startScreen();
-        Game.updateMoney();
 
         $("#new-game").on('click', function () {
             $(".webfont-preload").remove();
             Game.startNew();
             $("#cover").hide();
             $('#game').css('visibility', 'visible');
-            return false;
-        });
-
-        $("#statusbar").on('click', '#raise:not(.dis)', function () {
-            currentBet = currentBet + minimumBet;
-            userMoney = userMoney - minimumBet;
-
-            Game.sounds.bet();
-
-            Game.updateMoney();
-
-            return false;
-        });
-
-        $("#statusbar").on('click', '#reduce:not(.dis)', function () {
-            currentBet = currentBet - minimumBet;
-            userMoney = userMoney + minimumBet;
-
-            Game.sounds.bet();
-
-            Game.updateMoney();
-
             return false;
         });
 
@@ -489,12 +399,6 @@ Hand = function () {
     };
 };
 
-// WIP
-Money = function() {
-    var userMoney,
-        minimumBet;
-
-};
 
 $(document).ready(function () {
     Game.init();
